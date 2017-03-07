@@ -1,6 +1,8 @@
 # BulletsJS
 A simple library for common functions.
 
+[![Build Status](https://travis-ci.org/brightonmike/BulletsJS.svg?branch=master)](https://travis-ci.org/brightonmike/BulletsJS)
+
 To Do
 ======
 
