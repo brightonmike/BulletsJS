@@ -13,20 +13,20 @@ var gulp  = require('gulp'),
 
 
 
-gulp.task('gunner-js', function() {
+gulp.task('bullets-js', function() {
   return gulp.src([           
           // core - needed if you want to use any of the components below
-          'gunnerapp-core.js',
+          'bullets-core.js',
           
           // Pick the components you need in your project
-          './modules/gunnerapp-menu.js',
+          './modules/bullets-menu.js',
   ])
     .pipe(babel({
         presets: ['es2015'],
         compact: false
     }))
     .pipe(sourcemaps.init())
-    .pipe(concat('gunner.js'))
+    .pipe(concat('bulletsJS.js'))
     .pipe(gulp.dest('./build/js'))
     .pipe(rename({suffix: '.min'}))
     .pipe(uglify())
@@ -35,5 +35,5 @@ gulp.task('gunner-js', function() {
 });
 
 gulp.task('default', function() {
-  gulp.start('gunner-js');
+  gulp.start('bullets-js');
 });

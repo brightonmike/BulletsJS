@@ -1,4 +1,4 @@
-# gunnerapp
+# BulletsJS
 A simple library for common functions.
 
 To Do
