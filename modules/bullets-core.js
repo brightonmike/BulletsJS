@@ -1,9 +1,9 @@
-var GunnerApp = {
-    name: "GunnerApp",
+var BulletsJS = {
+    name: "BulletsJS",
         init: function(plugins) {
         plugins.forEach(function(plugin) {
             var _this = $(this);       		
-            GunnerApp[plugin].call(_this);
+            BulletsJS[plugin].call(_this);
         });   			
         },
     Menu: function(_this) {
