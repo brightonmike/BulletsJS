@@ -79,7 +79,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var BulletsJS = {
+var Bullets = {
     Menu: function(_this) {
         var menuplugin = new __WEBPACK_IMPORTED_MODULE_2__bullets_menu__["a" /* default */](_this);
         menuplugin;  

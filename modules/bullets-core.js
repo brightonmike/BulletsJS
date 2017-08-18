@@ -4,7 +4,7 @@ import GUID from '../utilities/util-guid';
 import Menu from './bullets-menu';
 import ClassOnScroll from './bullets-class-on-scroll';
 
-var BulletsJS = {
+var Bullets = {
     Menu: function(_this) {
         var menuplugin = new Menu(_this);
         menuplugin;  
