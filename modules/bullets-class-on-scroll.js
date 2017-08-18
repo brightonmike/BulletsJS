@@ -1,7 +1,7 @@
-class ClassOnScroll {
+export default class ClassOnScroll {
   constructor(element, options){
     this.element = $(element);
-    var opt = this.element.attr('data-gunner-options');           
+    var opt = this.element.attr('data-bullets-options');           
     if(opt) {
       opt = opt.split(',').reduce((acc, cur) => {
         var data = cur.split(':');

@@ -1,9 +1,9 @@
-class Menu {  
+export default class Menu {  
 
   constructor(element, options) {
-    this.element = element;
-    this._init();
+    this.element = element;    
     this.body = $('body');
+    this._init();
   }
 
   _init(){
