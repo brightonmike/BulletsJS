@@ -69,35 +69,100 @@
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bullets_menu__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__bullets_class_on_scroll__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utilities_util_debounce__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_util_guid__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bullets_menu__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__bullets_class_on_scroll__ = __webpack_require__(4);
+
+
+
 
 
 
 var BulletsJS = {
     Menu: function(_this) {
-        var menuplugin = new __WEBPACK_IMPORTED_MODULE_0__bullets_menu__["a" /* default */](_this);
+        var menuplugin = new __WEBPACK_IMPORTED_MODULE_2__bullets_menu__["a" /* default */](_this);
         menuplugin;  
     },
     ClassOnScroll: function(_this, options) {
-        var scrollplugin = new __WEBPACK_IMPORTED_MODULE_1__bullets_class_on_scroll__["a" /* default */](_this, options);
+        var scrollplugin = new __WEBPACK_IMPORTED_MODULE_3__bullets_class_on_scroll__["a" /* default */](_this, options);
         scrollplugin;  
     },
-}
+};
+
+Bullets.invoke = function () {
+  var nodes = document.querySelectorAll('[data-bullets-js]'),
+      node,
+      func;
+
+  for (var i = 0, j = nodes.length; i < j; i++) {
+    node = nodes[i];
+    func = node.getAttribute('data-bullets-js');
+    if (this[func]) {
+      console.log('fired ' + func);
+      this[func](node);
+    }
+  }
+};
 
 
+Bullets.invoke();
 
 /***/ }),
 /* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export default */
+function debounce(func, wait, immediate) {
+  var timeout;
+
+  return function () {
+    var context = this,
+        args = arguments;
+    var later = function later() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+}
+
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export default */
+function guid() {
+  var d = new Date().getTime();
+  if (window.performance && typeof window.performance.now === "function") {
+    d += performance.now(); //use high-precision timer if available
+  }
+  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = (d + Math.random() * 16) % 16 | 0;
+    d = Math.floor(d / 16);
+    return (c == 'x' ? r : r & 0x3 | 0x8).toString(16);
+  });
+  return uuid;
+}
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 class Menu {  
 
   constructor(element, options) {
-    this.element = element;
-    this._init();
+    this.element = element;    
     this.body = $('body');
+    this._init();
   }
 
   _init(){
@@ -137,7 +202,7 @@ class Menu {
 
 
 /***/ }),
-/* 2 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -162,8 +227,6 @@ class ClassOnScroll {
     var _offset = this.options.offset;
     var _activeclass = this.options.activeclass;
 
-
-    // we might want the offset to be based off another element
     if(this.options.reference) {
       var _reference = this.options.reference;  
       if($(_reference).length > 0){

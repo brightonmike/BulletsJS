@@ -1,3 +1,6 @@
+import Debounce from '../utilities/util-debounce';
+import GUID from '../utilities/util-guid';
+
 import Menu from './bullets-menu';
 import ClassOnScroll from './bullets-class-on-scroll';
 
@@ -27,6 +30,5 @@ Bullets.invoke = function () {
   }
 };
 
-$(document).on('ready', function () {
-  Bullets.invoke();
-});
+
+Bullets.invoke();

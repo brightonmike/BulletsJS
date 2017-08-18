@@ -19,8 +19,6 @@ export default class ClassOnScroll {
     var _offset = this.options.offset;
     var _activeclass = this.options.activeclass;
 
-
-    // we might want the offset to be based off another element
     if(this.options.reference) {
       var _reference = this.options.reference;  
       if($(_reference).length > 0){
