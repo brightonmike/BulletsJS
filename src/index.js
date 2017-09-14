@@ -1,5 +1,3 @@
-import symbol from "core-js/es6/symbol";
-
 import Debounce from '../utilities/util-debounce';
 import GUID from '../utilities/util-guid';
 
@@ -12,9 +10,9 @@ const bullets = {
 
         const nodes = document.querySelectorAll('[data-js]');
 
-        for (let node of nodes) {
-            let component = node.getAttribute('data-js'),
-                optionsNo = node.getAttribute('data-options');
+        for (let i = 0; i < nodes.length; i++) {
+            let component = nodes[i].getAttribute('data-js'),
+                optionsNo = nodes[i].getAttribute('data-options');
 
             if ( optionsNo && bullets.hasOwnProperty(component) ) {
                 let options = [],
@@ -22,10 +20,10 @@ const bullets = {
 
                 while (optionsNo > options.length) {
                     optionsCount++;
-                    options.push(node.getAttribute(`data-option-${optionsCount}`));
+                    options.push(nodes[i].getAttribute(`data-option-${optionsCount}`));
                 }
 
-                bullets[component](node, options);
+                bullets[component](nodes[i], options);
             }
         }
     },
