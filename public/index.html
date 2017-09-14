@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Bullets JS</title>
+	<meta name="viewport" content="width=device-width">
 	<style type="text/css">
 		div {
 			border: solid 2px;
@@ -11,9 +12,25 @@
 		.is-scrolled-to {
 			background-color: blue;
 		}
+
+		button {
+			display: block;
+			width: 100px;
+			height: 100px;
+		}
+
+		nav {
+			display: none;
+		}
+
+		.is-open-menu nav {
+			display: block;
+		}
 	</style>
 </head>
 <body>
+	<button data-js="MenuToggle" data-options="1" data-option-1="is-open-menu">Menu</button>
+	<nav>The navigation!</nav>
 	<div id="top"></div>
 	<div data-js="ScrollClass" data-options="2" data-option-1="is-scrolled-to" data-option-2="20"></div>
 	<div></div>
