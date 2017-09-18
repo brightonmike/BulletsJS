@@ -20,6 +20,35 @@ Future
 
 
 
+
+Development
+===========
+
+For general developement, use the following command:
+
+npm run serve
+
+
+NOTE:
+When testing on older devices (with Browser Stack for example) you might see:
+
+SyntaxError: Unexpected token 'const'
+
+Webpack Dev Server isn't serving babelified code.
+
+It's a pain but I currently do the following (3 separate console tabs):
+
+npm run watch
+
+http-server
+
+(optional)
+gulp browsersync
+
+public/index.html then pulls in fully babelified code via a script tag.
+
+
+
 Using the components
 ====================
 

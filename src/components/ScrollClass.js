@@ -12,10 +12,10 @@ export default class ScrollClass {
 			scrollClass = this.scrollClass,
 			offset = this.offset || element.offsetTop;
 
-		body.onscroll = () => {
+		window.addEventListener('scroll', () => {
 			if (scrollClass && body.scrollTop > offset) {
 				element.classList.add(scrollClass);
 			}
-		};
+		});
 	}
 }

@@ -1,3 +1,5 @@
+import symbol from "core-js/es6/symbol";
+
 import Debounce from '../utilities/util-debounce';
 import GUID from '../utilities/util-guid';
 
@@ -9,11 +11,13 @@ const bullets = {
     init: () => {
         const nodes = document.querySelectorAll('[data-js]');
 
-        for (let i = 0; i < nodes.length; i++) {
+        // querySelectorAll bugs in IOS - can't use 'for of' loop
+        for (var i = 0; i < nodes.length; i++) {
             let component = nodes[i].getAttribute('data-js'),
                 optionsNo = nodes[i].getAttribute('data-options'),
                 options = [];
 
+            // get options from data-option-<number>
             if (optionsNo) {
                 let optionsCount = 0;
                 while (optionsNo > options.length) {
