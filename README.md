@@ -61,12 +61,35 @@ Elements need the following HTML attributes:
 		Check the component's constructor function or see below.
 
 
-Component options by component.
+Component options by component:
+
 
 ScrollClass:
-- data-option-1 The scroll class.
+
+- data-option-1 Required. The scroll class.
+
 - data-option-2 An offset. If none is provided, the element's offset 
 	will be used by default.
+
+
+
+MenuToggle:
+
+
+
+FormValidator:
+
+- Doesn't take any options
+
+- Input elements must have the class 'js-data-input'. The script only collects values from fields with this class.
+
+- All inputs should have appropriate name, type and class attributes.
+
+- REQUIRED FIELDS: please use the class 'is-required'. For radio inputs please apply this class to their container element.
+
+- RADIO INPUTS: please use a container element with the class 'js-data-input' and type 'radio-group'. The radio inputs must be children of that container. The container could just be a div element.
+
+- SELECT ELEMENTS: must have the attribute type="select". The select element itself should carry the class 'js-data-input' and 'is-required'. Blank option element must have the value 'placeholder'. This tells the script not to collect the value and invalidate the form if the select is required. Without a blank placeholder option the form will collect the first option element's value. 
 
 
 

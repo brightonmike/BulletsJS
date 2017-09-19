@@ -1,6 +1,6 @@
 export default class MenuToggle {
 	constructor(element, options) {
-		this.element = element;
+		this.button = element;
 		this.activeClass = options[0];
 		this.handleButtonClick();
 	}
@@ -8,7 +8,7 @@ export default class MenuToggle {
 	handleButtonClick() {
 		const body = document.body,
 			activeClass = this.activeClass,
-			button = this.element;
+			button = this.button;
 
 		const isOpenNav = () => {
 			return body.classList.contains(activeClass);

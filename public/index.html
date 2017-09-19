@@ -4,7 +4,7 @@
 	<title>Bullets JS</title>
 	<meta name="viewport" content="width=device-width">
 	<style type="text/css">
-		div {
+		.layout {
 			border: solid 2px;
 			height: 800px;
 		}
@@ -26,29 +26,94 @@
 		.is-open-menu nav {
 			display: block;
 		}
+
+		form input {
+			border: solid 2px gray;
+		}
+
+		.js-form-error {
+			border: solid 2px red;
+		}
 	</style>
 </head>
 <body>
 	<button data-js="MenuToggle" data-options="1" data-option-1="is-open-menu">Menu</button>
 	<nav>The navigation!</nav>
-	<div id="top"></div>
-	<div data-js="ScrollClass" data-options="2" data-option-1="is-scrolled-to"></div>
-	<div>
+	<div class="layout" id="top"></div>
+
+	<div class="layout" data-js="ScrollClass" data-options="2" data-option-1="is-scrolled-to"></div>
+
+	<div class="layout">
 		<form data-js="FormValidator">
-			<input type="text" name="name">
-			<input type="email" name="email">
+			<br><br>
+
+			<fieldset>
+				<input class="js-data-input is-required" type="text" name="fullName" placeholder="Full name...">
+				<input class="js-data-input is-required" type="email" name="email" placeholder="Email...">
+			</fieldset>
+			<br><br>
+
+			<fieldset>
+				<div class="is-required js-data-input" type="radio-group">
+					<label for="builder">Builder</label>
+					<input id="builder" type="radio" name="occupation" value="builder">
+					<label for="plasterer">Plasterer</label>
+					<input id="plasterer" type="radio" name="occupation" value="plasterer">
+					<label for="carpenter">Carpenter</label>
+					<input id="carpenter" type="radio" name="occupation" value="carpenter">
+				</div>
+				<br>
+
+				<div class="is-required js-data-input" type="radio-group">
+					<h4>Are you qualified?</h4>
+					<label for="qualified">Yes</label>
+					<input id="qualified" type="radio" name="qualified" value="yes">
+					<label for="unqualified">No</label>
+					<input id="unqualified" type="radio" name="qualified" value="no">
+				</div>
+				<br>
+				<!-- <label for="qualified">Qualified</label>
+				<input id="qualified" class="js-data-input" type="checkbox" name="qualified"> -->
+
+			</fieldset>
+			<br><br>
+
+			<fieldset>
+				<h4>Location</h4>
+				<select class="js-data-input is-required" type="select" name="location">
+					<option value="placeholder">-Please Select-</option>
+					<option>Sussex</option>
+					<option>London</option>
+					<option>Hampshire</option>
+				</select>
+			</fieldset>
+
+			<fieldset>
+				<div class="js-data-input" type="radio-group">
+					<h4>Years experience</h4>
+					<label for="1-2">1-2</label>
+					<input id="1-2" type="radio" name="experience" value="1-2 years">
+					<label for="3-10">3-10</label>
+					<input id="3-10" type="radio" name="experience" value="3-10 years">
+					<label for="10+">10+</label>
+					<input id="10+" type="radio" name="experience" value="10+ years">
+				</div>
+			</fieldset>
+			
 			<button id="form-submit" type="submit">Submit</button>
 		</form>
 	</div>
-	<div data-js="None"></div>
-	<div></div>
-	<div class="div"></div>
-	<div class="div"></div>
-	<div></div>
-	<div></div>
-	<div></div>
-	<div></div>
-	<div></div>
+
+	<div class="layout" data-js="None"></div>
+
+	<div class="layout"></div>
+	<div class="layout"></div>
+	<div class="layout"></div>
+	<div class="layout"></div>
+	<div class="layout"></div>
+	<div class="layout"></div>
+	<div class="layout"></div>
+	<div class="layout"></div>
 
 	<script type="text/javascript" src="bullets.js"></script>
 </body>

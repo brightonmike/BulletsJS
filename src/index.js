@@ -5,13 +5,14 @@ import GUID from '../utilities/util-guid';
 
 import ScrollClass from './components/ScrollClass';
 import MenuToggle from './components/MenuToggle';
+import FormValidator from './components/FormValidator';
 
 
 const bullets = {
     init: () => {
         const nodes = document.querySelectorAll('[data-js]');
 
-        // querySelectorAll bugs in IOS - can't use 'for of' loop
+        // querySelectorAll bug in IOS - can't use 'for of' loop
         for (var i = 0; i < nodes.length; i++) {
             let component = nodes[i].getAttribute('data-js'),
                 optionsNo = nodes[i].getAttribute('data-options'),
@@ -38,6 +39,10 @@ const bullets = {
 
     MenuToggle: (element, options) => {
         const Component = new MenuToggle(element, options);
+    },
+
+    FormValidator: (element, options) => {
+        const Component = new FormValidator(element, options);
     }
 }
 
