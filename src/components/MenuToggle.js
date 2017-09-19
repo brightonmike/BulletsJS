@@ -7,14 +7,13 @@ export default class MenuToggle {
 
 	handleButtonClick() {
 		const body = document.body,
-			activeClass = this.activeClass,
-			button = this.button;
+			activeClass = this.activeClass;
 
 		const isOpenNav = () => {
 			return body.classList.contains(activeClass);
 		}
 
-		button.onclick = () => {
+		this.button.onclick = () => {
 			if (activeClass && isOpenNav()) {
 				body.classList.remove(activeClass);
 			} else {

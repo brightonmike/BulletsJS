@@ -637,14 +637,13 @@ var MenuToggle = function () {
 		key: "handleButtonClick",
 		value: function handleButtonClick() {
 			var body = document.body,
-			    activeClass = this.activeClass,
-			    button = this.button;
+			    activeClass = this.activeClass;
 
 			var isOpenNav = function isOpenNav() {
 				return body.classList.contains(activeClass);
 			};
 
-			button.onclick = function () {
+			this.button.onclick = function () {
 				if (activeClass && isOpenNav()) {
 					body.classList.remove(activeClass);
 				} else {
