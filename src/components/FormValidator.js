@@ -13,7 +13,7 @@ export default class FormValidator {
 
 	handleSubmit() {
 		const _FormValidator = this,
-			form = this.form;
+			{ form } = this;
 
 		form.addEventListener('submit', e => {
 			e.preventDefault();
@@ -34,7 +34,7 @@ export default class FormValidator {
 	}
 
 	collectData() {
-		const form = this.form,
+		const { form } = this,
 			dataInputs = form.querySelectorAll('.js-data-input');
 
 		for (var i = 0; i < dataInputs.length; i++) {

@@ -7,8 +7,7 @@ export default class ScrollClass {
 	}
 
 	handleScroll() {
-		const element = this.element,
-			scrollClass = this.scrollClass,
+		const { element, scrollClass } = this,
 			offset = this.offset || element.offsetTop;
 
 		window.addEventListener('scroll', () => {

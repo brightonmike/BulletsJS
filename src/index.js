@@ -7,6 +7,7 @@ import ScrollClass from './components/ScrollClass';
 import MenuToggle from './components/MenuToggle';
 import FormValidator from './components/FormValidator';
 import Modal from './components/Modal';
+import Accordion from './components/Accordion';
 
 
 const bullets = {
@@ -48,6 +49,10 @@ const bullets = {
 
     Modal: (element, options) => {
         const Component = new Modal(element, options);
+    },
+
+    Accordion: (element, options) => {
+        const Component = new Accordion(element);
     }
 }
 

@@ -477,6 +477,7 @@ var FormValidator = function () {
 			var _FormValidator = this,
 			    form = this.form;
 
+
 			form.addEventListener('submit', function (e) {
 				e.preventDefault();
 
@@ -498,6 +499,7 @@ var FormValidator = function () {
 		value: function collectData() {
 			var form = this.form,
 			    dataInputs = form.querySelectorAll('.js-data-input');
+
 
 			for (var i = 0; i < dataInputs.length; i++) {
 				this.validateByType(dataInputs[i]);
@@ -639,6 +641,7 @@ var MenuToggle = function () {
 			var body = document.body,
 			    activeClass = this.activeClass;
 
+
 			var isOpenNav = function isOpenNav() {
 				return body.classList.contains(activeClass);
 			};
@@ -689,6 +692,7 @@ var ScrollClass = function () {
 			var element = this.element,
 			    scrollClass = this.scrollClass,
 			    offset = this.offset || element.offsetTop;
+
 
 			window.addEventListener('scroll', function () {
 				if (scrollClass && window.scrollY > offset) {
@@ -799,6 +803,10 @@ var _Modal2 = __webpack_require__(57);
 
 var _Modal3 = _interopRequireDefault(_Modal2);
 
+var _Accordion2 = __webpack_require__(58);
+
+var _Accordion3 = _interopRequireDefault(_Accordion2);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var bullets = {
@@ -840,6 +848,10 @@ var bullets = {
 
     Modal: function Modal(element, options) {
         var Component = new _Modal3.default(element, options);
+    },
+
+    Accordion: function Accordion(element, options) {
+        var Component = new _Accordion3.default(element);
     }
 };
 
@@ -1584,6 +1596,61 @@ var Modal = function () {
 }();
 
 exports.default = Modal;
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Accordion = function () {
+	function Accordion(element) {
+		_classCallCheck(this, Accordion);
+
+		this.accordion = element;
+		this.activeClass = 'is-open-panel';
+		this.handleClick();
+	}
+
+	_createClass(Accordion, [{
+		key: 'handleClick',
+		value: function handleClick() {
+			var _this = this;
+
+			var accordion = this.accordion,
+			    triggers = accordion.getElementsByClassName('js-accordion-trigger');
+
+
+			for (var i = 0; i < triggers.length; i++) {
+
+				triggers[i].onclick = function (e) {
+					_this.removeActiveClass(triggers);
+					e.target.classList.add(_this.activeClass);
+				};
+			}
+		}
+	}, {
+		key: 'removeActiveClass',
+		value: function removeActiveClass(triggers) {
+			for (var i = 0; i < triggers.length; i++) {
+				triggers[i].classList.remove(this.activeClass);
+			}
+		}
+	}]);
+
+	return Accordion;
+}();
+
+exports.default = Accordion;
 
 /***/ })
 /******/ ]);

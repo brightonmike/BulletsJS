@@ -97,6 +97,28 @@ FormValidator:
 
 
 
+Modal:
+
+- data-option-1 Required. The active class.
+
+- Required elements: modal, overlay (suggested as last children of body element) and toggle button. The button takes the data-js attribute.
+
+- Clicking the overlay hides the modal and overlay.
+
+
+
+ACCORDION:
+
+- Doesn't take any options.
+
+- Attaches click event handler to elements with the class 'js-accordion-trigger'.
+
+- The trigger will acquire the class 'is-open-panel' when clicked.
+
+- The height of the next element can then be 'auto' (CSS).
+
+
+
 TESTING
 =======
 

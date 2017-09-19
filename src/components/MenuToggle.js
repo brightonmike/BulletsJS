@@ -7,7 +7,7 @@ export default class MenuToggle {
 
 	handleButtonClick() {
 		const body = document.body,
-			activeClass = this.activeClass;
+			{ activeClass } = this;
 
 		const isOpenNav = () => {
 			return body.classList.contains(activeClass);

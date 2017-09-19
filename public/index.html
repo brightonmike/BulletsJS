@@ -69,19 +69,40 @@
 			width: 100%;
 			height: 100%;
 		}
+
+		.accordion__trigger {
+			margin: 0;
+			padding: 20px 0;
+			border: solid 1px gray;
+			cursor: pointer;
+		}
+
+		.js-accordion-inner {
+			height: 0;
+			overflow: hidden;
+		}
+
+		.is-open-panel {
+			background-color: gray;
+			color: white;
+		}
+
+		.is-open-panel + .js-accordion-inner {
+			height: auto;
+		}
 	</style>
 </head>
 <body>
 	<button data-js="MenuToggle" data-options="1" data-option-1="is-open-menu">Menu</button>
 	<nav>The navigation!</nav>
 
-	<div class="layout">
+	<section class="layout">
 		<button data-js="Modal" data-options="1" data-option-1="is-active-modal">Open Test Modal!</button>
-	</div>
+	</section>
 
-	<div class="layout" data-js="ScrollClass" data-options="1" data-option-1="is-scrolled-to"></div>
+	<section class="layout" data-js="ScrollClass" data-options="1" data-option-1="is-scrolled-to"></section>
 
-	<div class="layout">
+	<section class="layout">
 		<form data-js="FormValidator">
 			<br><br>
 
@@ -140,17 +161,54 @@
 			
 			<button id="form-submit" type="submit">Submit</button>
 		</form>
-	</div>
+	</section>
 
-	<div class="layout" data-js="None"></div>
+	<section class="layout">
 
-	<div class="layout"></div>
-	<div class="layout"></div>
-	<div class="layout"></div>
-	<div class="layout"></div>
-	<div class="layout"></div>
-	<div class="layout"></div>
-	<div class="layout"></div>
+		<article class="accordion" data-js="Accordion">
+			<div class="js-accordion-panel">
+				<h3 class="accordion__trigger js-accordion-trigger">Title 1</h3>
+				<div class="js-accordion-inner">
+					<p>Text</p>
+					<p>Text</p>
+					<p>Text</p>
+				</div>
+			</div>
+			<div class="js-accordion-panel">
+				<h3 class="accordion__trigger js-accordion-trigger">Title 2</h3>
+				<div class="js-accordion-inner">
+					<p>Text</p>
+				</div>
+			</div>
+			<div class="js-accordion-panel">
+				<h3 class="accordion__trigger js-accordion-trigger">Title 3</h3>
+				<div class="js-accordion-inner">
+					<p>Text</p>
+					<p>Text</p>
+					<p>Text</p>
+					<p>Text</p>
+					<p>Text</p>
+					<p>Text</p>
+				</div>
+			</div>
+			<div class="js-accordion-panel">
+				<h3 class="accordion__trigger js-accordion-trigger">Title 4</h3>
+				<div class="js-accordion-inner">
+					<p>Text</p>
+					<p>Text</p>
+				</div>
+			</div>			
+		</article>
+
+	</section>
+
+	<section class="layout"></section>
+	<section class="layout"></section>
+	<section class="layout"></section>
+	<section class="layout"></section>
+	<section class="layout"></section>
+	<section class="layout"></section>
+	<section class="layout"></section>
 
 	<div id="overlay" class="overlay"></div>
 	<div id="test-modal" class="modal">This is the Test Modal!</div>
