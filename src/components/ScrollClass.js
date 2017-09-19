@@ -7,13 +7,12 @@ export default class ScrollClass {
 	}
 
 	handleScroll() {
-		const body = document.body,
-			element = this.element,
+		const element = this.element,
 			scrollClass = this.scrollClass,
 			offset = this.offset || element.offsetTop;
 
 		window.addEventListener('scroll', () => {
-			if (scrollClass && body.scrollTop > offset) {
+			if (scrollClass && window.scrollY > offset) {
 				element.classList.add(scrollClass);
 			}
 		});

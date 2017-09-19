@@ -75,11 +75,15 @@ ScrollClass:
 
 MenuToggle:
 
+- data-option-1 Required. The active class.
+
+- Active class will be toggled on the body.
+
 
 
 FormValidator:
 
-- Doesn't take any options
+- Doesn't take any options.
 
 - Input elements must have the class 'js-data-input'. The script only collects values from fields with this class.
 
@@ -90,6 +94,13 @@ FormValidator:
 - RADIO INPUTS: please use a container element with the class 'js-data-input' and type 'radio-group'. The radio inputs must be children of that container. The container could just be a div element.
 
 - SELECT ELEMENTS: must have the attribute type="select". The select element itself should carry the class 'js-data-input' and 'is-required'. Blank option element must have the value 'placeholder'. This tells the script not to collect the value and invalidate the form if the select is required. Without a blank placeholder option the form will collect the first option element's value. 
+
+
+
+TESTING
+=======
+
+Tested across all devices and browsers finding strong compatibility. ScrollClass may not work on IE11, but it works on Edge 14 up.
 
 
 

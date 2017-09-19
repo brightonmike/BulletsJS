@@ -687,13 +687,12 @@ var ScrollClass = function () {
 	_createClass(ScrollClass, [{
 		key: 'handleScroll',
 		value: function handleScroll() {
-			var body = document.body,
-			    element = this.element,
+			var element = this.element,
 			    scrollClass = this.scrollClass,
 			    offset = this.offset || element.offsetTop;
 
 			window.addEventListener('scroll', function () {
-				if (scrollClass && body.scrollTop > offset) {
+				if (scrollClass && window.scrollY > offset) {
 					element.classList.add(scrollClass);
 				}
 			});
