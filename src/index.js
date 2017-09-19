@@ -6,6 +6,7 @@ import GUID from '../utilities/util-guid';
 import ScrollClass from './components/ScrollClass';
 import MenuToggle from './components/MenuToggle';
 import FormValidator from './components/FormValidator';
+import Modal from './components/Modal';
 
 
 const bullets = {
@@ -43,6 +44,10 @@ const bullets = {
 
     FormValidator: (element, options) => {
         const Component = new FormValidator(element, options);
+    },
+
+    Modal: (element, options) => {
+        const Component = new Modal(element, options);
     }
 }
 

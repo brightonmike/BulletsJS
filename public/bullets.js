@@ -795,6 +795,10 @@ var _FormValidator2 = __webpack_require__(29);
 
 var _FormValidator3 = _interopRequireDefault(_FormValidator2);
 
+var _Modal2 = __webpack_require__(57);
+
+var _Modal3 = _interopRequireDefault(_Modal2);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var bullets = {
@@ -832,6 +836,10 @@ var bullets = {
 
     FormValidator: function FormValidator(element, options) {
         var Component = new _FormValidator3.default(element, options);
+    },
+
+    Modal: function Modal(element, options) {
+        var Component = new _Modal3.default(element, options);
     }
 };
 
@@ -1525,6 +1533,57 @@ setToStringTag(Math, 'Math', true);
 // 24.3.3 JSON[@@toStringTag]
 setToStringTag(global.JSON, 'JSON', true);
 
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Modal = function () {
+	function Modal(button, options) {
+		_classCallCheck(this, Modal);
+
+		this.button = button;
+		this.activeClass = options[0];
+
+		this.handleClick();
+	}
+
+	_createClass(Modal, [{
+		key: 'handleClick',
+		value: function handleClick() {
+			var button = this.button,
+			    activeClass = this.activeClass,
+			    body = document.body,
+			    overlay = document.getElementById('overlay');
+
+
+			if (!activeClass) return;
+
+			button.onclick = function () {
+				body.classList.add(activeClass);
+			};
+
+			overlay.onclick = function () {
+				body.classList.remove(activeClass);
+			};
+		}
+	}]);
+
+	return Modal;
+}();
+
+exports.default = Modal;
 
 /***/ })
 /******/ ]);
