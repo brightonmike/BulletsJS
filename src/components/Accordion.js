@@ -9,7 +9,7 @@ export default class Accordion {
 		const { accordion } = this,
 			triggers = accordion.getElementsByClassName('js-accordion-trigger');
 
-		for (var i = 0; i < triggers.length; i++) {
+		for (let i = 0; i < triggers.length; i++) {
 			
 			triggers[i].onclick = e => {
 				this.removeActiveClass(triggers);
@@ -19,7 +19,7 @@ export default class Accordion {
 	}
 
 	removeActiveClass(triggers) {
-		for (var i = 0; i < triggers.length; i++) {
+		for (let i = 0; i < triggers.length; i++) {
 			triggers[i].classList.remove(this.activeClass);
 		}
 	}

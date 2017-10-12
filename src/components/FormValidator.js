@@ -8,9 +8,6 @@ export default class FormValidator {
 		this.isValid = false;
 	}
 
-	// loop through inputs
-		// validation required depends on type
-
 	handleSubmit() {
 		const _FormValidator = this,
 			{ form } = this;
@@ -22,8 +19,6 @@ export default class FormValidator {
 				return;
 
 			this.collectData();
-			console.log(this.isValid ? 'Form is valid' : 'Form is not valid');
-			console.log(this.data);
 
 			// prevent form submitting twice from double click.
 			_FormValidator.isSubmitted = true;
@@ -37,7 +32,7 @@ export default class FormValidator {
 		const { form } = this,
 			dataInputs = form.querySelectorAll('.js-data-input');
 
-		for (var i = 0; i < dataInputs.length; i++) {
+		for (let i = 0; i < dataInputs.length; i++) {
 			this.validateByType(dataInputs[i]);
 		}
 	}
@@ -74,7 +69,7 @@ export default class FormValidator {
 		const inputs = group.getElementsByTagName('input');
 		let isFoundValue = false;
 
-		for (var i = 0; i < inputs.length; i++) {
+		for (let i = 0; i < inputs.length; i++) {
 			if (inputs[i].checked) {
 				isFoundValue = true;
 				this.setData(inputs[i].getAttribute('name'), inputs[i].value);
