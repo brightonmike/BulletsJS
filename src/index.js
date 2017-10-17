@@ -16,8 +16,8 @@ const bullets = {
 
         // querySelectorAll bug in IOS - can't use 'for of' loop
         for (let i = 0; i < nodes.length; i++) {
-            let component = nodes[i].getAttribute('data-js'),
-                optionsNo = nodes[i].getAttribute('data-options'),
+            let component = nodes[i].getAttribute('data-bullets-js'),
+                optionsNo = nodes[i].getAttribute('data-bullets-options'),
                 options = [];
 
             // get options from data-option-<number>
