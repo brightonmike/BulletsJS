@@ -1,4 +1,5 @@
-import symbol from "core-js/es6/symbol";
+// if using 'for of' loops - some older browsers don't have Symbol
+// import symbol from "core-js/es6/symbol";
 
 import Debounce from '../utilities/util-debounce';
 import GUID from '../utilities/util-guid';
