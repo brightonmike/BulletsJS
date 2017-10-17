@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bullets JS</title>
+	<meta name="viewport" content="width=device-width">
+	<style type="text/css">
+		.layout {
+			border: solid 2px;
+			height: 800px;
+		}
+
+		.is-scrolled-to {
+			background-color: blue;
+		}
+
+		button {
+			display: block;
+			width: 100px;
+			height: 100px;
+			cursor: pointer;
+		}
+
+		nav {
+			display: none;
+		}
+
+		.is-open-menu nav {
+			display: block;
+		}
+
+		form input {
+			border: solid 2px gray;
+		}
+
+		.js-form-error {
+			border: solid 2px red;
+		}
+
+		.overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 0px;
+			height: 0px;
+			background: rgba(0,0,0,0.5);
+			cursor: pointer;
+		}
+
+		.modal {
+			position: fixed;
+			top: -100%;
+			left: 0;
+			right: 0;
+			margin: 100px auto 0;
+			width: 50%;
+			height: 400px;
+			border: solid 1px black;
+			background-color: white;
+			opacity: 0;
+			transition: all 0.5s;
+		}
+
+		.is-active-modal .modal {
+			top: 0;
+			opacity: 1;
+		}
+
+		.is-active-modal .overlay {
+			width: 100%;
+			height: 100%;
+		}
+
+		.accordion__trigger {
+			margin: 0;
+			padding: 20px 0;
+			border: solid 1px gray;
+			cursor: pointer;
+		}
+
+		.js-accordion-inner {
+			height: 0;
+			overflow: hidden;
+		}
+
+		.is-open-panel {
+			background-color: gray;
+			color: white;
+		}
+
+		.is-open-panel + .js-accordion-inner {
+			height: auto;
+		}
+	</style>
+</head>
+<body>
+	<button data-js="MenuToggle" data-options="1" data-option-1="is-open-menu">Menu</button>
+	<nav>The navigation!</nav>
+
+	<section class="layout">
+		<button data-js="Modal" data-options="1" data-option-1="is-active-modal">Open Test Modal!</button>
+	</section>
+
+	<section class="layout" data-js="ScrollClass" data-options="1" data-option-1="is-scrolled-to"></section>
+
+	<section class="layout">
+		<form data-js="FormValidator">
+			<br><br>
+
+			<fieldset>
+				<input class="js-data-input is-required" type="text" name="fullName" placeholder="Full name...">
+				<input class="js-data-input is-required" type="email" name="email" placeholder="Email...">
+			</fieldset>
+			<br><br>
+
+			<fieldset>
+				<div class="is-required js-data-input" type="radio-group">
+					<label for="builder">Builder</label>
+					<input id="builder" type="radio" name="occupation" value="builder">
+					<label for="plasterer">Plasterer</label>
+					<input id="plasterer" type="radio" name="occupation" value="plasterer">
+					<label for="carpenter">Carpenter</label>
+					<input id="carpenter" type="radio" name="occupation" value="carpenter">
+				</div>
+				<br>
+
+				<div class="is-required js-data-input" type="radio-group">
+					<h4>Are you qualified?</h4>
+					<label for="qualified">Yes</label>
+					<input id="qualified" type="radio" name="qualified" value="yes">
+					<label for="unqualified">No</label>
+					<input id="unqualified" type="radio" name="qualified" value="no">
+				</div>
+				<br>
+				<!-- <label for="qualified">Qualified</label>
+				<input id="qualified" class="js-data-input" type="checkbox" name="qualified"> -->
+
+			</fieldset>
+			<br><br>
+
+			<fieldset>
+				<h4>Location</h4>
+				<select class="js-data-input is-required" type="select" name="location">
+					<option value="placeholder">-Please Select-</option>
+					<option>Sussex</option>
+					<option>London</option>
+					<option>Hampshire</option>
+				</select>
+			</fieldset>
+
+			<fieldset>
+				<div class="js-data-input" type="radio-group">
+					<h4>Years experience</h4>
+					<label for="1-2">1-2</label>
+					<input id="1-2" type="radio" name="experience" value="1-2 years">
+					<label for="3-10">3-10</label>
+					<input id="3-10" type="radio" name="experience" value="3-10 years">
+					<label for="10+">10+</label>
+					<input id="10+" type="radio" name="experience" value="10+ years">
+				</div>
+			</fieldset>
+			
+			<button id="form-submit" type="submit">Submit</button>
+		</form>
+	</section>
+
+	<section class="layout">
+
+		<article class="accordion" data-js="Accordion">
+			<div class="js-accordion-panel">
+				<h3 class="accordion__trigger js-accordion-trigger">Title 1</h3>
+				<div class="js-accordion-inner">
+					<p>Text</p>
+					<p>Text</p>
+					<p>Text</p>
+				</div>
+			</div>
+			<div class="js-accordion-panel">
+				<h3 class="accordion__trigger js-accordion-trigger">Title 2</h3>
+				<div class="js-accordion-inner">
+					<p>Text</p>
+				</div>
+			</div>
+			<div class="js-accordion-panel">
+				<h3 class="accordion__trigger js-accordion-trigger">Title 3</h3>
+				<div class="js-accordion-inner">
+					<p>Text</p>
+					<p>Text</p>
+					<p>Text</p>
+					<p>Text</p>
+					<p>Text</p>
+					<p>Text</p>
+				</div>
+			</div>
+			<div class="js-accordion-panel">
+				<h3 class="accordion__trigger js-accordion-trigger">Title 4</h3>
+				<div class="js-accordion-inner">
+					<p>Text</p>
+					<p>Text</p>
+				</div>
+			</div>			
+		</article>
+
+	</section>
+
+	<section class="layout"></section>
+	<section class="layout"></section>
+	<section class="layout"></section>
+	<section class="layout"></section>
+	<section class="layout"></section>
+	<section class="layout"></section>
+	<section class="layout"></section>
+
+	<div id="overlay" class="overlay"></div>
+	<div id="test-modal" class="modal">This is the Test Modal!</div>
+
+	<script type="text/javascript" src="bullets.js"></script>
+</body>
+</html>
