@@ -1,24 +1,33 @@
+import extend from "extend";
 export default class Modal {
 	constructor(button, options) {
 		this.button = button;
-		this.activeClass = options[0];
-
+		this.options = extend(Modal.defaults, options);
+		this.activeClass = this.options['activeClass'];				
+		this.modal = document.querySelector(this.options['targetModal']);
+		this.modalClose = document.querySelectorAll(this.options['targetModal'] + ' .js-modal-close');		
 		this.handleClick();
 	}
 
 	handleClick() {
-		const { button, activeClass } = this,
-			body = document.body,
-			overlay = document.getElementById('overlay');
+		const { button, activeClass, modal, modalClose } = this,
+			body = document.body;
 
 		if (!activeClass) return;
 
 		button.onclick = () => {
-			body.classList.add(activeClass);
+			body.classList.add('modal-is-open');
+			modal.classList.add(activeClass);
 		}
 
-		overlay.onclick = () => {
-			body.classList.remove(activeClass);
+		modalClose[0].onclick = () => {
+			body.classList.remove('modal-is-open');
+			modal.classList.remove(activeClass);
 		}
 	}
 }
+
+Modal.defaults = {
+	activeClass: 'is-open',
+	targetModal: '.js-modal'
+};

@@ -1,4 +1,3 @@
-// if using 'for of' loops - some older browsers don't have Symbol
 // import symbol from "core-js/es6/symbol";
 
 import Debounce from '../utilities/util-debounce';
@@ -13,25 +12,34 @@ import Accordion from './components/Accordion';
 
 const bullets = {
     init: () => {
-        const nodes = document.querySelectorAll('[data-js]');
+        const nodes = document.querySelectorAll('[data-bullets-js]');
 
         // querySelectorAll bug in IOS - can't use 'for of' loop
         for (let i = 0; i < nodes.length; i++) {
-            let component = nodes[i].getAttribute('data-js'),
-                optionsNo = nodes[i].getAttribute('data-options'),
-                options = [];
+            let component = nodes[i].getAttribute('data-bullets-js'),
+                options = nodes[i].getAttribute('data-bullets-options');
+
+
+              if(options) {
+                options = options.split(',').reduce((acc, cur) => {
+                  var data = cur.split(':');
+                  acc[data[0]] = data[1];
+                  return acc;
+                }, {});
+              } 
 
             // get options from data-option-<number>
-            if (optionsNo) {
-                let optionsCount = 0;
-                while (optionsNo > options.length) {
-                    optionsCount++;
-                    options.push(nodes[i].getAttribute(`data-option-${optionsCount}`));
-                }
-            }
+            // if (optionsNo) {
+            //     let optionsCount = 0;
+            //     while (optionsNo > options.length) {
+            //         optionsCount++;
+            //         options.push(nodes[i].getAttribute(`data-option-${optionsCount}`));
+            //     }
+            // }
 
             if (bullets.hasOwnProperty(component)) {
                 bullets[component](nodes[i], options);
+                console.log('fired '+component);
             }
         }            
     },
