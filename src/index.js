@@ -1,4 +1,4 @@
-// import symbol from "core-js/es6/symbol";
+import symbol from "core-js/es6/symbol";
 
 import Debounce from '../utilities/util-debounce';
 import GUID from '../utilities/util-guid';
@@ -8,7 +8,6 @@ import MenuToggle from './components/MenuToggle';
 import FormValidator from './components/FormValidator';
 import Modal from './components/Modal';
 import Accordion from './components/Accordion';
-
 
 const bullets = {
     init: () => {

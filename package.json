@@ -1,18 +1,33 @@
 {
-  "name": "bullets-js",
-  "version": "1.1.0",
-  "repository": {
-    "type": "git"
+  "_from": "bullets-js@^1.0.0",
+  "_id": "bullets-js@1.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-AC6M9JcDYQsWxQ4/5QVQJhTm+ochbRyzY2MOP+CEoH13/x/fshoegUqLcLbL5NMfOa07Ypv4T1cjGuQ56sncaw==",
+  "_location": "/bullets-js",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "bullets-js@^1.0.0",
+    "name": "bullets-js",
+    "escapedName": "bullets-js",
+    "rawSpec": "^1.0.0",
+    "saveSpec": null,
+    "fetchSpec": "^1.0.0"
   },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/bullets-js/-/bullets-js-1.0.0.tgz",
+  "_shasum": "67e277b45270d55d383f91f71129ac6356c3342a",
+  "_spec": "bullets-js@^1.0.0",
+  "_where": "/Users/michael/Local Sites/personal-strengths/app/public/wp-content/themes/personalstrengths",
+  "author": {
+    "name": "Neptik"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
   "description": "Speaker",
-  "main": "index.js",
-  "scripts": {
-    "serve": "webpack-dev-server",
-    "watch": "webpack --watch",
-    "build": "webpack -p"
-  },
-  "author": "Neptik",
-  "license": "GPL-2.0 AND MIT",
   "devDependencies": {
     "autoprefixer": "^7.1.1",
     "babel-core": "^6.25.0",
@@ -23,5 +38,21 @@
     "babel-preset-stage-0": "^6.24.1",
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.7.1"
+  },
+  "license": "GPL-2.0 AND MIT",
+  "main": "index.js",
+  "name": "bullets-js",
+  "repository": {
+    "type": "git"
+  },
+  "scripts": {
+    "build": "webpack -p",
+    "serve": "webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch"
+  },
+  "version": "1.0.0",
+  "dependencies": {
+    "lodash": "^4.17.4"
   }
 }
