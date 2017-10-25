@@ -1,24 +1,12 @@
 # BulletsJS
 A simple library for common functions.
 
+`npm install bullets-js --save-dev`
+
 [![Build Status](https://travis-ci.org/brightonmike/BulletsJS.svg?branch=master)](https://travis-ci.org/brightonmike/BulletsJS)
 
 To Do
 ======
-
-- Split each function into individual file
-- Create Gulpfile.js
-- Create app.js with invoke function
-- Create utils functions and split
-
-
-Future
-======
-
-- Remove jQuery dependancy
-- Add to NPM.
-
-
 
 
 Development
@@ -26,24 +14,24 @@ Development
 
 For general developement, use the following command:
 
-npm run serve
+`npm run serve`
 
 
 NOTE:
 When testing on older devices (with Browser Stack for example) you might see:
 
-SyntaxError: Unexpected token 'const'
+`SyntaxError: Unexpected token 'const'`
 
 Webpack Dev Server isn't serving babelified code.
 
 It's a pain but I currently do the following (3 separate console tabs):
 
-npm run watch
+`npm run watch`
 
-http-server
+`http-server`
 
 (optional)
-gulp browsersync
+`gulp browsersync`
 
 public/index.html then pulls in fully babelified code via a script tag.
 
@@ -51,6 +39,61 @@ public/index.html then pulls in fully babelified code via a script tag.
 
 Using the components
 ====================
+
+Attach a `data-bullets-js` attribute to an element to instantiate a class. E.g:
+
+`<button data-bullets-js="Modal" >Open Modal</button>`
+
+You can then pass through options like so:
+
+`<button data-bullets-js="Modal" data-bullets-options="activeClass:open">`
+
+Chain options with a comma:
+
+`<button data-bullets-js="Modal" data-bullets-options="activeClass:open,targetModal:.js-modal-2">`
+
+Modal
+-----
+
+The Modal takes two options (default values shown). The class should be instantiated on the button used to trigger the modal.
+
+`activeClass: is-open`
+`targetModal: .js-modal`
+
+The activeClass is applied to the modal, and you should use CSS to then show the modal. For example:
+
+```
+.modal {
+	display: none;
+}
+.modal.is-open {
+	display: block;
+}
+```
+
+If you want multiple modals on the same page, specify a different `targetModal` for each modal. You should include an overlay element on your page. A class is added to the body which can be used to make your overlay appear/disappear with the modal. The class added to the body is `modal-is-open`.
+
+Modal mark-up should be as follows. The `modal` and `modal__inner` classes are optional but suggested. You only need one overlay element per page.
+
+```
+<div class="overlay"></div>
+
+<div class="modal js-modal">		
+	<div class="modal__inner">
+
+		<button class="js-modal-close button secondary button--hollow">Close</button>
+		<h2>This is a modal!</h2>
+
+	</div>
+</div>
+```
+
+Scroll Class
+------------
+
+This component adds a class to an element when the user scrolls a certian distance. You can use it to trigger animations on scroll, or sticky a header. 
+
+Example mark up:
 
 Elements need the following HTML attributes:
 	
