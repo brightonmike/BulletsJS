@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 35);
+/******/ 	return __webpack_require__(__webpack_require__.s = 37);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -125,8 +125,8 @@ exports.f = __webpack_require__(1) ? Object.defineProperty : function defineProp
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(44);
-var defined = __webpack_require__(40);
+var IObject = __webpack_require__(46);
+var defined = __webpack_require__(42);
 module.exports = function (it) {
   return IObject(defined(it));
 };
@@ -392,7 +392,7 @@ exports.f = Object.getOwnPropertySymbols;
 
 var has = __webpack_require__(2);
 var toIObject = __webpack_require__(4);
-var arrayIndexOf = __webpack_require__(37)(false);
+var arrayIndexOf = __webpack_require__(39)(false);
 var IE_PROTO = __webpack_require__(26)('IE_PROTO');
 
 module.exports = function (object, names) {
@@ -441,23 +441,45 @@ exports.f = __webpack_require__(6);
 
 /***/ }),
 /* 29 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+class Accordion {
+	constructor(element) {
+		this.accordion = element;
+		this.activeClass = 'is-open-panel';
+		this.handleClick();
+	}
+
+	handleClick() {
+		const { accordion } = this,
+			triggers = accordion.getElementsByClassName('js-accordion-trigger');
+
+		for (let i = 0; i < triggers.length; i++) {
+			
+			triggers[i].onclick = e => {
+				this.removeActiveClass(triggers);
+				e.target.classList.add(this.activeClass);
+			}
+		}
+	}
+
+	removeActiveClass(triggers) {
+		for (let i = 0; i < triggers.length; i++) {
+			triggers[i].classList.remove(this.activeClass);
+		}
+	}
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Accordion;
 
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
+/***/ }),
+/* 30 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var FormValidator = function () {
-	function FormValidator(element) {
-		_classCallCheck(this, FormValidator);
-
+"use strict";
+class FormValidator {
+	constructor(element) {
 		this.form = element;
 		this.handleSubmit();
 		this.isSubmitted = false;
@@ -466,258 +488,239 @@ var FormValidator = function () {
 		this.isValid = false;
 	}
 
-	// loop through inputs
-	// validation required depends on type
+	handleSubmit() {
+		const _FormValidator = this,
+			{ form } = this;
 
-	_createClass(FormValidator, [{
-		key: 'handleSubmit',
-		value: function handleSubmit() {
-			var _this = this;
+		form.addEventListener('submit', e => {
+			e.preventDefault();
+			
+			if (_FormValidator.isSubmitted)  
+				return;
 
-			var _FormValidator = this,
-			    form = this.form;
+			this.collectData();
 
+			// prevent form submitting twice from double click.
+			_FormValidator.isSubmitted = true;
+			setTimeout(() => {
+				_FormValidator.isSubmitted = false;
+			}, 1000);
+		});
+	}
 
-			form.addEventListener('submit', function (e) {
-				e.preventDefault();
+	collectData() {
+		const { form } = this,
+			dataInputs = form.querySelectorAll('.js-data-input');
 
-				if (_FormValidator.isSubmitted) return;
-
-				_this.collectData();
-				console.log(_this.isValid ? 'Form is valid' : 'Form is not valid');
-				console.log(_this.data);
-
-				// prevent form submitting twice from double click.
-				_FormValidator.isSubmitted = true;
-				setTimeout(function () {
-					_FormValidator.isSubmitted = false;
-				}, 1000);
-			});
+		for (let i = 0; i < dataInputs.length; i++) {
+			this.validateByType(dataInputs[i]);
 		}
-	}, {
-		key: 'collectData',
-		value: function collectData() {
-			var form = this.form,
-			    dataInputs = form.querySelectorAll('.js-data-input');
+	}
 
+	validateByType(input) {
+		const type = input.getAttribute('type');
 
-			for (var i = 0; i < dataInputs.length; i++) {
-				this.validateByType(dataInputs[i]);
+		switch (type) {
+			case 'radio-group': 
+				this.validateRadioGroup(input);
+				break;
+
+			case 'checkbox': 
+				this.setData(input.getAttribute('name'), input.checked);
+				break;
+							
+			case 'text': 
+				this.validateText(input);
+				break;
+
+			case 'select':
+				this.validateSelect(input) 
+				break;
+											
+			case 'email': 
+				this.validateEmail(input);			
+
+			default:
+				return null;
+		}
+	}
+
+	validateRadioGroup(group) {
+		const inputs = group.getElementsByTagName('input');
+		let isFoundValue = false;
+
+		for (let i = 0; i < inputs.length; i++) {
+			if (inputs[i].checked) {
+				isFoundValue = true;
+				this.setData(inputs[i].getAttribute('name'), inputs[i].value);
+				group.classList.remove(this.errorClass);			
 			}
 		}
-	}, {
-		key: 'validateByType',
-		value: function validateByType(input) {
-			var type = input.getAttribute('type');
 
-			switch (type) {
-				case 'radio-group':
-					this.validateRadioGroup(input);
-					break;
-
-				case 'checkbox':
-					this.setData(input.getAttribute('name'), input.checked);
-					break;
-
-				case 'text':
-					this.validateText(input);
-					break;
-
-				case 'select':
-					this.validateSelect(input);
-					break;
-
-				case 'email':
-					this.validateEmail(input);
-
-				default:
-					return null;
-			}
+		if (!isFoundValue && this.isRequired(group)) {
+			this.handleError(group); 
 		}
-	}, {
-		key: 'validateRadioGroup',
-		value: function validateRadioGroup(group) {
-			var inputs = group.getElementsByTagName('input');
-			var isFoundValue = false;
+	}
 
-			for (var i = 0; i < inputs.length; i++) {
-				if (inputs[i].checked) {
-					isFoundValue = true;
-					this.setData(inputs[i].getAttribute('name'), inputs[i].value);
-					group.classList.remove(this.errorClass);
-				}
-			}
+	validateText(input) {
+		if (input.value.length) {
+			this.approveInput(input);
 
-			if (!isFoundValue && this.isRequired(group)) {
-				this.handleError(group);
-			}
+		} else if (this.isRequired(input)) {
+			this.handleError(input);
 		}
-	}, {
-		key: 'validateText',
-		value: function validateText(input) {
-			if (input.value.length) {
-				this.approveInput(input);
-			} else if (this.isRequired(input)) {
-				this.handleError(input);
-			}
-		}
-	}, {
-		key: 'validateEmail',
-		value: function validateEmail(input, key) {
-			var pattern = new RegExp(/^(("[\w-+\s]+")|([\w-+]+(?:\.[\w-+]+)*)|("[\w-+\s]+")([\w-+]+(?:\.[\w-+]+)*))(@((?:[\w-+]+\.)*\w[\w-+]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][\d]\.|1[\d]{2}\.|[\d]{1,2}\.))((25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\.){2}(25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\]?$)/i);
+	}
 
-			if (pattern.test(input.value)) {
-				this.approveInput(input);
-			} else if (this.isRequired(input)) {
-				this.handleError(input);
-			}
-		}
-	}, {
-		key: 'validateSelect',
-		value: function validateSelect(select) {
-			if (select.value == 'placeholder') {
-				if (this.isRequired(select)) this.handleError(select);
-			} else {
-				this.approveInput(select);
-			}
-		}
-	}, {
-		key: 'isRequired',
-		value: function isRequired(input) {
-			return input.classList.contains('is-required');
-		}
-	}, {
-		key: 'approveInput',
-		value: function approveInput(input) {
-			this.isValid = true;
-			this.setData(input.getAttribute('name'), input.value);
-			input.classList.remove(this.errorClass);
-		}
-	}, {
-		key: 'handleError',
-		value: function handleError(element) {
-			this.isValid = false;
-			element.classList.add(this.errorClass);
-		}
-	}, {
-		key: 'setData',
-		value: function setData(key, value) {
-			this.data[key] = value;
-		}
-	}]);
+	validateEmail(input, key) {
+		const pattern = new RegExp(/^(("[\w-+\s]+")|([\w-+]+(?:\.[\w-+]+)*)|("[\w-+\s]+")([\w-+]+(?:\.[\w-+]+)*))(@((?:[\w-+]+\.)*\w[\w-+]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][\d]\.|1[\d]{2}\.|[\d]{1,2}\.))((25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\.){2}(25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\]?$)/i);
+		
+		if (pattern.test(input.value)) {
+			this.approveInput(input);
 
-	return FormValidator;
-}();
+		} else if (this.isRequired(input)) {
+			this.handleError(input);
+		}
+	}
 
-exports.default = FormValidator;
+	validateSelect(select) {
+		if (select.value == 'placeholder') {
+			if (this.isRequired(select)) this.handleError(select);
+		} else {
+			this.approveInput(select);
+		}
+	}
+
+	isRequired(input) {
+		return input.classList.contains('is-required');
+	}
+
+	approveInput(input) {
+		this.isValid = true;
+		this.setData(input.getAttribute('name'), input.value);
+		input.classList.remove(this.errorClass);
+	}
+
+	handleError(element) {
+		this.isValid = false;
+		element.classList.add(this.errorClass);
+	}
+
+	setData(key, value) {
+		this.data[key] = value;
+	}
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = FormValidator;
+
+
 
 /***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 31 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var MenuToggle = function () {
-	function MenuToggle(element, options) {
-		_classCallCheck(this, MenuToggle);
-
+class MenuToggle {
+	constructor(element, options) {
 		this.button = element;
 		this.activeClass = options[0];
 		this.handleButtonClick();
 	}
 
-	_createClass(MenuToggle, [{
-		key: "handleButtonClick",
-		value: function handleButtonClick() {
-			var body = document.body,
-			    activeClass = this.activeClass;
+	handleButtonClick() {
+		const body = document.body,
+			{ activeClass } = this;
 
-
-			var isOpenNav = function isOpenNav() {
-				return body.classList.contains(activeClass);
-			};
-
-			this.button.onclick = function () {
-				if (activeClass && isOpenNav()) {
-					body.classList.remove(activeClass);
-				} else {
-					body.classList.add(activeClass);
-				}
-			};
+		const isOpenNav = () => {
+			return body.classList.contains(activeClass);
 		}
-	}]);
 
-	return MenuToggle;
-}();
+		this.button.onclick = () => {
+			if (activeClass && isOpenNav()) {
+				body.classList.remove(activeClass);
+			} else {
+				body.classList.add(activeClass);
+			}
+		}
+	}
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = MenuToggle;
 
-exports.default = MenuToggle;
 
 /***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 32 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_extend__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_extend___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_extend__);
+
+class Modal {
+	constructor(button, options) {
+		this.button = button;
+		this.options = __WEBPACK_IMPORTED_MODULE_0_extend___default()(Modal.defaults, options);
+		this.activeClass = this.options['activeClass'];				
+		this.modal = document.querySelector(this.options['targetModal']);
+		this.modalClose = document.querySelectorAll(this.options['targetModal'] + ' .js-modal-close');		
+		this.handleClick();
+	}
+
+	handleClick() {
+		const { button, activeClass, modal, modalClose } = this,
+			body = document.body;
+
+		if (!activeClass) return;
+
+		button.onclick = () => {
+			body.classList.add('modal-is-open');
+			modal.classList.add(activeClass);
+		}
+
+		modalClose[0].onclick = () => {
+			body.classList.remove('modal-is-open');
+			modal.classList.remove(activeClass);
+		}
+	}
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Modal;
 
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
+Modal.defaults = {
+	activeClass: 'is-open',
+	targetModal: '.js-modal'
+};
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+/***/ }),
+/* 33 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ScrollClass = function () {
-	function ScrollClass(element, options) {
-		_classCallCheck(this, ScrollClass);
-
+"use strict";
+class ScrollClass {
+	constructor(element, options) {
 		this.element = element;
 		this.scrollClass = options[0];
 		this.offset = options[1];
 		this.handleScroll();
 	}
 
-	_createClass(ScrollClass, [{
-		key: 'handleScroll',
-		value: function handleScroll() {
-			var element = this.element,
-			    scrollClass = this.scrollClass,
-			    offset = this.offset || element.offsetTop;
+	handleScroll() {
+		const { element, scrollClass } = this,
+			offset = this.offset || element.offsetTop;
 
+		window.addEventListener('scroll', () => {
+			if (scrollClass && window.scrollY > offset) {
+				element.classList.add(scrollClass);
+			}
+		});
+	}
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = ScrollClass;
 
-			window.addEventListener('scroll', function () {
-				if (scrollClass && window.scrollY > offset) {
-					element.classList.add(scrollClass);
-				}
-			});
-		}
-	}]);
-
-	return ScrollClass;
-}();
-
-exports.default = ScrollClass;
 
 /***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 34 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = debounce;
+/* unused harmony export default */
 function debounce(func, wait, immediate) {
   var timeout;
 
@@ -735,17 +738,14 @@ function debounce(func, wait, immediate) {
   };
 }
 
+
+
 /***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 35 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = guid;
+/* unused harmony export default */
 function guid() {
   var d = new Date().getTime();
   if (window.performance && typeof window.performance.now === "function") {
@@ -760,105 +760,103 @@ function guid() {
 }
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(56);
-__webpack_require__(55);
+__webpack_require__(58);
+__webpack_require__(57);
 module.exports = __webpack_require__(8).Symbol;
 
 
 /***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 37 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_core_js_es6_symbol__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_core_js_es6_symbol___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_core_js_es6_symbol__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_util_debounce__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_util_guid__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_ScrollClass__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_MenuToggle__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_FormValidator__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Modal__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Accordion__ = __webpack_require__(29);
 
 
-var _symbol = __webpack_require__(34);
 
-var _symbol2 = _interopRequireDefault(_symbol);
 
-var _utilDebounce = __webpack_require__(32);
 
-var _utilDebounce2 = _interopRequireDefault(_utilDebounce);
 
-var _utilGuid = __webpack_require__(33);
 
-var _utilGuid2 = _interopRequireDefault(_utilGuid);
 
-var _ScrollClass2 = __webpack_require__(31);
 
-var _ScrollClass3 = _interopRequireDefault(_ScrollClass2);
 
-var _MenuToggle2 = __webpack_require__(30);
+// var _ = require('lodash/core');
 
-var _MenuToggle3 = _interopRequireDefault(_MenuToggle2);
-
-var _FormValidator2 = __webpack_require__(29);
-
-var _FormValidator3 = _interopRequireDefault(_FormValidator2);
-
-var _Modal2 = __webpack_require__(57);
-
-var _Modal3 = _interopRequireDefault(_Modal2);
-
-var _Accordion2 = __webpack_require__(58);
-
-var _Accordion3 = _interopRequireDefault(_Accordion2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var bullets = {
-    init: function init() {
-        var nodes = document.querySelectorAll('[data-js]');
+const bullets = {
+    init: () => {
+        const nodes = document.querySelectorAll('[data-bullets-js]');
 
         // querySelectorAll bug in IOS - can't use 'for of' loop
-        for (var i = 0; i < nodes.length; i++) {
-            var component = nodes[i].getAttribute('data-js'),
-                optionsNo = nodes[i].getAttribute('data-options'),
-                options = [];
+        for (let i = 0; i < nodes.length; i++) {
+            let component = nodes[i].getAttribute('data-bullets-js'),
+                options = nodes[i].getAttribute('data-bullets-options');
+
+
+              if(options) {
+                options = options.split(',').reduce((acc, cur) => {
+                  var data = cur.split(':');
+                  acc[data[0]] = data[1];
+                  return acc;
+                }, {});
+              } 
 
             // get options from data-option-<number>
-            if (optionsNo) {
-                var optionsCount = 0;
-                while (optionsNo > options.length) {
-                    optionsCount++;
-                    options.push(nodes[i].getAttribute('data-option-' + optionsCount));
-                }
-            }
+            // if (optionsNo) {
+            //     let optionsCount = 0;
+            //     while (optionsNo > options.length) {
+            //         optionsCount++;
+            //         options.push(nodes[i].getAttribute(`data-option-${optionsCount}`));
+            //     }
+            // }
 
             if (bullets.hasOwnProperty(component)) {
                 bullets[component](nodes[i], options);
+                console.log('fired '+component);
             }
-        }
+        }            
     },
 
-    ScrollClass: function ScrollClass(element, options) {
-        var Component = new _ScrollClass3.default(element, options);
+    ScrollClass: (element, options) => {
+        const Component = new __WEBPACK_IMPORTED_MODULE_3__components_ScrollClass__["a" /* default */](element, options);
     },
 
-    MenuToggle: function MenuToggle(element, options) {
-        var Component = new _MenuToggle3.default(element, options);
+    MenuToggle: (element, options) => {
+        const Component = new __WEBPACK_IMPORTED_MODULE_4__components_MenuToggle__["a" /* default */](element, options);
     },
 
-    FormValidator: function FormValidator(element, options) {
-        var Component = new _FormValidator3.default(element, options);
+    FormValidator: (element, options) => {
+        const Component = new __WEBPACK_IMPORTED_MODULE_5__components_FormValidator__["a" /* default */](element, options);
     },
 
-    Modal: function Modal(element, options) {
-        var Component = new _Modal3.default(element, options);
+    Modal: (element, options) => {
+        const Component = new __WEBPACK_IMPORTED_MODULE_6__components_Modal__["a" /* default */](element, options);
     },
 
-    Accordion: function Accordion(element, options) {
-        var Component = new _Accordion3.default(element);
+    Accordion: (element, options) => {
+        const Component = new __WEBPACK_IMPORTED_MODULE_7__components_Accordion__["a" /* default */](element);
     }
-};
+}
 
 bullets.init();
 
+
+
+
 /***/ }),
-/* 36 */
+/* 38 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -868,14 +866,14 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
 var toIObject = __webpack_require__(4);
-var toLength = __webpack_require__(53);
-var toAbsoluteIndex = __webpack_require__(52);
+var toLength = __webpack_require__(55);
+var toAbsoluteIndex = __webpack_require__(54);
 module.exports = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIObject($this);
@@ -897,7 +895,7 @@ module.exports = function (IS_INCLUDES) {
 
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
@@ -926,11 +924,11 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(36);
+var aFunction = __webpack_require__(38);
 module.exports = function (fn, that, length) {
   aFunction(fn);
   if (that === undefined) return fn;
@@ -952,7 +950,7 @@ module.exports = function (fn, that, length) {
 
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(module, exports) {
 
 // 7.2.1 RequireObjectCoercible(argument)
@@ -963,7 +961,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
@@ -984,14 +982,14 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(0);
 var core = __webpack_require__(8);
 var hide = __webpack_require__(13);
 var redefine = __webpack_require__(17);
-var ctx = __webpack_require__(39);
+var ctx = __webpack_require__(41);
 var PROTOTYPE = 'prototype';
 
 var $export = function (type, name, source) {
@@ -1033,7 +1031,7 @@ module.exports = $export;
 
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var document = __webpack_require__(0).document;
@@ -1041,7 +1039,7 @@ module.exports = document && document.documentElement;
 
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
@@ -1053,7 +1051,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
@@ -1064,7 +1062,7 @@ module.exports = Array.isArray || function isArray(arg) {
 
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var META = __webpack_require__(5)('meta');
@@ -1123,12 +1121,12 @@ var meta = module.exports = {
 
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 var anObject = __webpack_require__(7);
-var dPs = __webpack_require__(48);
+var dPs = __webpack_require__(50);
 var enumBugKeys = __webpack_require__(12);
 var IE_PROTO = __webpack_require__(26)('IE_PROTO');
 var Empty = function () { /* empty */ };
@@ -1143,7 +1141,7 @@ var createDict = function () {
   var gt = '>';
   var iframeDocument;
   iframe.style.display = 'none';
-  __webpack_require__(43).appendChild(iframe);
+  __webpack_require__(45).appendChild(iframe);
   iframe.src = 'javascript:'; // eslint-disable-line no-script-url
   // createDict = iframe.contentWindow.Object;
   // html.removeChild(iframe);
@@ -1170,7 +1168,7 @@ module.exports = Object.create || function create(O, Properties) {
 
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(3);
@@ -1189,7 +1187,7 @@ module.exports = __webpack_require__(1) ? Object.defineProperties : function def
 
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var pIE = __webpack_require__(15);
@@ -1211,7 +1209,7 @@ exports.f = __webpack_require__(1) ? gOPD : function getOwnPropertyDescriptor(O,
 
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
@@ -1236,7 +1234,7 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var def = __webpack_require__(3).f;
@@ -1249,7 +1247,7 @@ module.exports = function (it, tag, stat) {
 
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(27);
@@ -1262,7 +1260,7 @@ module.exports = function (index, length) {
 
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
@@ -1274,7 +1272,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(0);
@@ -1289,13 +1287,13 @@ module.exports = function (name) {
 
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // 19.1.3.6 Object.prototype.toString()
-var classof = __webpack_require__(38);
+var classof = __webpack_require__(40);
 var test = {};
 test[__webpack_require__(6)('toStringTag')] = 'z';
 if (test + '' != '[object z]') {
@@ -1306,7 +1304,7 @@ if (test + '' != '[object z]') {
 
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1315,25 +1313,25 @@ if (test + '' != '[object z]') {
 var global = __webpack_require__(0);
 var has = __webpack_require__(2);
 var DESCRIPTORS = __webpack_require__(1);
-var $export = __webpack_require__(42);
+var $export = __webpack_require__(44);
 var redefine = __webpack_require__(17);
-var META = __webpack_require__(46).KEY;
+var META = __webpack_require__(48).KEY;
 var $fails = __webpack_require__(9);
 var shared = __webpack_require__(18);
-var setToStringTag = __webpack_require__(51);
+var setToStringTag = __webpack_require__(53);
 var uid = __webpack_require__(5);
 var wks = __webpack_require__(6);
 var wksExt = __webpack_require__(28);
-var wksDefine = __webpack_require__(54);
-var enumKeys = __webpack_require__(41);
-var isArray = __webpack_require__(45);
+var wksDefine = __webpack_require__(56);
+var enumKeys = __webpack_require__(43);
+var isArray = __webpack_require__(47);
 var anObject = __webpack_require__(7);
 var toIObject = __webpack_require__(4);
 var toPrimitive = __webpack_require__(19);
 var createDesc = __webpack_require__(16);
-var _create = __webpack_require__(47);
-var gOPNExt = __webpack_require__(50);
-var $GOPD = __webpack_require__(49);
+var _create = __webpack_require__(49);
+var gOPNExt = __webpack_require__(52);
+var $GOPD = __webpack_require__(51);
 var $DP = __webpack_require__(3);
 var $keys = __webpack_require__(14);
 var gOPD = $GOPD.f;
@@ -1547,110 +1545,97 @@ setToStringTag(global.JSON, 'JSON', true);
 
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
+var hasOwn = Object.prototype.hasOwnProperty;
+var toStr = Object.prototype.toString;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Modal = function () {
-	function Modal(button, options) {
-		_classCallCheck(this, Modal);
-
-		this.button = button;
-		this.activeClass = options[0];
-
-		this.handleClick();
+var isArray = function isArray(arr) {
+	if (typeof Array.isArray === 'function') {
+		return Array.isArray(arr);
 	}
 
-	_createClass(Modal, [{
-		key: 'handleClick',
-		value: function handleClick() {
-			var button = this.button,
-			    activeClass = this.activeClass,
-			    body = document.body,
-			    overlay = document.getElementById('overlay');
+	return toStr.call(arr) === '[object Array]';
+};
 
-
-			if (!activeClass) return;
-
-			button.onclick = function () {
-				body.classList.add(activeClass);
-			};
-
-			overlay.onclick = function () {
-				body.classList.remove(activeClass);
-			};
-		}
-	}]);
-
-	return Modal;
-}();
-
-exports.default = Modal;
-
-/***/ }),
-/* 58 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Accordion = function () {
-	function Accordion(element) {
-		_classCallCheck(this, Accordion);
-
-		this.accordion = element;
-		this.activeClass = 'is-open-panel';
-		this.handleClick();
+var isPlainObject = function isPlainObject(obj) {
+	if (!obj || toStr.call(obj) !== '[object Object]') {
+		return false;
 	}
 
-	_createClass(Accordion, [{
-		key: 'handleClick',
-		value: function handleClick() {
-			var _this = this;
+	var hasOwnConstructor = hasOwn.call(obj, 'constructor');
+	var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf');
+	// Not own constructor property must be Object
+	if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
+		return false;
+	}
 
-			var accordion = this.accordion,
-			    triggers = accordion.getElementsByClassName('js-accordion-trigger');
+	// Own properties are enumerated firstly, so to speed up,
+	// if last one is own, then all properties are own.
+	var key;
+	for (key in obj) { /**/ }
 
+	return typeof key === 'undefined' || hasOwn.call(obj, key);
+};
 
-			for (var i = 0; i < triggers.length; i++) {
+module.exports = function extend() {
+	var options, name, src, copy, copyIsArray, clone;
+	var target = arguments[0];
+	var i = 1;
+	var length = arguments.length;
+	var deep = false;
 
-				triggers[i].onclick = function (e) {
-					_this.removeActiveClass(triggers);
-					e.target.classList.add(_this.activeClass);
-				};
+	// Handle a deep copy situation
+	if (typeof target === 'boolean') {
+		deep = target;
+		target = arguments[1] || {};
+		// skip the boolean and the target
+		i = 2;
+	}
+	if (target == null || (typeof target !== 'object' && typeof target !== 'function')) {
+		target = {};
+	}
+
+	for (; i < length; ++i) {
+		options = arguments[i];
+		// Only deal with non-null/undefined values
+		if (options != null) {
+			// Extend the base object
+			for (name in options) {
+				src = target[name];
+				copy = options[name];
+
+				// Prevent never-ending loop
+				if (target !== copy) {
+					// Recurse if we're merging plain objects or arrays
+					if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+						if (copyIsArray) {
+							copyIsArray = false;
+							clone = src && isArray(src) ? src : [];
+						} else {
+							clone = src && isPlainObject(src) ? src : {};
+						}
+
+						// Never move original objects, clone them
+						target[name] = extend(deep, clone, copy);
+
+					// Don't bring in undefined values
+					} else if (typeof copy !== 'undefined') {
+						target[name] = copy;
+					}
+				}
 			}
 		}
-	}, {
-		key: 'removeActiveClass',
-		value: function removeActiveClass(triggers) {
-			for (var i = 0; i < triggers.length; i++) {
-				triggers[i].classList.remove(this.activeClass);
-			}
-		}
-	}]);
+	}
 
-	return Accordion;
-}();
+	// Return the modified object
+	return target;
+};
 
-exports.default = Accordion;
 
 /***/ })
 /******/ ]);
