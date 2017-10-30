@@ -1,7 +1,9 @@
+import extend from "extend";
 export default class MenuToggle {
 	constructor(element, options) {
 		this.button = element;
-		this.activeClass = options[0];
+		this.options = extend(MenuToggle.defaults, options);
+		this.activeClass = this.options['activeClass'];			
 		this.handleButtonClick();
 	}
 
@@ -22,3 +24,7 @@ export default class MenuToggle {
 		}
 	}
 }
+
+MenuToggle.defaults = {
+	activeClass: 'menu-is-open'
+};
