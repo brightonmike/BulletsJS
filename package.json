@@ -48,7 +48,8 @@
   "scripts": {
     "build": "webpack -p",
     "serve": "webpack-dev-server",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "test" : "webpack -p"
   },
   "version": "1.3.0",
   "dependencies": {
