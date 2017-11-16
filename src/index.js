@@ -1,4 +1,4 @@
-import symbol from "core-js/es6/symbol";
+// import symbol from "core-js/es6/symbol";
 
 import Debounce from '../utilities/util-debounce';
 import GUID from '../utilities/util-guid';
