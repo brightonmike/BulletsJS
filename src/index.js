@@ -1,4 +1,4 @@
-import symbol from "core-js/es6/symbol";
+// import symbol from "core-js/es6/symbol";
 
 import Debounce from '../utilities/util-debounce';
 import GUID from '../utilities/util-guid';
@@ -26,15 +26,6 @@ const bullets = {
                   return acc;
                 }, {});
               } 
-
-            // get options from data-option-<number>
-            // if (optionsNo) {
-            //     let optionsCount = 0;
-            //     while (optionsNo > options.length) {
-            //         optionsCount++;
-            //         options.push(nodes[i].getAttribute(`data-option-${optionsCount}`));
-            //     }
-            // }
 
             if (bullets.hasOwnProperty(component)) {
                 bullets[component](nodes[i], options);

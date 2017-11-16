@@ -1,4 +1,4 @@
-import extend from "extend";
+import extend from "../../utilities/util-extend";
 export default class Modal {
 	constructor(button, options) {
 		this.button = button;

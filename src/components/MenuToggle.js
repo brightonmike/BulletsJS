@@ -1,4 +1,4 @@
-import extend from "extend";
+import extend from "../../utilities/util-extend";
 export default class MenuToggle {
 	constructor(element, options) {
 		this.button = element;
