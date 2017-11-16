@@ -1,4 +1,4 @@
-import extend from "extend";
+import extend from "../../utilities/util-extend";
 var debounce = require('lodash/debounce');
 export default class ScrollClass {
 	constructor(element, options) {

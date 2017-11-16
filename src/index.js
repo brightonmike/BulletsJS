@@ -27,15 +27,6 @@ const bullets = {
                 }, {});
               } 
 
-            // get options from data-option-<number>
-            // if (optionsNo) {
-            //     let optionsCount = 0;
-            //     while (optionsNo > options.length) {
-            //         optionsCount++;
-            //         options.push(nodes[i].getAttribute(`data-option-${optionsCount}`));
-            //     }
-            // }
-
             if (bullets.hasOwnProperty(component)) {
                 bullets[component](nodes[i], options);
                 console.log('fired '+component);
