@@ -5,9 +5,10 @@ A simple library for common functions.
 
 [![Build Status](https://travis-ci.org/brightonmike/BulletsJS.svg?branch=master)](https://travis-ci.org/brightonmike/BulletsJS)
 
-To Do
-======
+Requirements
+============
 
+You'll need to write some CSS for BulletsJS components to work. You can change the default classes used by passing through the options.
 
 Development
 ===========
@@ -88,78 +89,38 @@ Modal mark-up should be as follows. The `modal` and `modal__inner` classes are o
 </div>
 ```
 
-Scroll Class
-------------
+Menu Toggle
+-----------
 
-This component adds a class to an element when the user scrolls a certian distance. You can use it to trigger animations on scroll, or sticky a header. 
+The Menu Toggle takes one option (default values shown). The class should be instantiated on the button used to trigger the menu.
 
-Example mark up:
+`activeClass: menu-is-open`
 
-Elements need the following HTML attributes:
-	
-	data-options - Required. The number of options you're passing.
+Example CSS might be:
 
-	data-option-1, data-option-2 etc... The options. 
-		Order must match the order the component reads options. 
-		Check the component's constructor function or see below.
+```
+.menu {
+	display: none;
+}
 
+.menu-is-open .menu {
+	display: block;
+}
+```
 
-Component options by component:
+The menu toggle component requires the following mark-up to be accessible.
 
+```
+<button class="menutoggle" data-bullets-js="MenuToggle" id="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="menu">
+```
 
-ScrollClass:
+The `aria-controls` attribute should match the `id` attribute of the navigation menu. The above button is using `menu` so the navigation is marked-up as follows.
 
-- data-option-1 Required. The scroll class.
+```
+<nav class="menu" aria-hidden="true" aria-labelledby="menu-toggle" id="menu"></nav>
+```
 
-- data-option-2 An offset. If none is provided, the element's offset 
-	will be used by default.
-
-
-
-MenuToggle:
-
-- data-option-1 Required. The active class.
-
-- Active class will be toggled on the body.
-
-
-
-FormValidator:
-
-- Doesn't take any options.
-
-- Input elements must have the class 'js-data-input'. The script only collects values from fields with this class.
-
-- All inputs should have appropriate name, type and class attributes.
-
-- REQUIRED FIELDS: please use the class 'is-required'. For radio inputs please apply this class to their container element.
-
-- RADIO INPUTS: please use a container element with the class 'js-data-input' and type 'radio-group'. The radio inputs must be children of that container. The container could just be a div element.
-
-- SELECT ELEMENTS: must have the attribute type="select". The select element itself should carry the class 'js-data-input' and 'is-required'. Blank option element must have the value 'placeholder'. This tells the script not to collect the value and invalidate the form if the select is required. Without a blank placeholder option the form will collect the first option element's value. 
-
-
-
-Modal:
-
-- data-option-1 Required. The active class.
-
-- Required elements: modal, overlay (suggested as last children of body element) and toggle button. The button takes the data-js attribute.
-
-- Clicking the overlay hides the modal and overlay.
-
-
-
-ACCORDION:
-
-- Doesn't take any options.
-
-- Attaches click event handler to elements with the class 'js-accordion-trigger'.
-
-- The trigger will acquire the class 'is-open-panel' when clicked.
-
-- The height of the next element can then be 'auto' (CSS).
-
+The behaviour of this component is that it toggles a class on the body element which you can then attach CSS to for making your menu appear and disappear. The component then toggles the necessary aria roles for you to ensure the menu is more accessible.
 
 
 TESTING
