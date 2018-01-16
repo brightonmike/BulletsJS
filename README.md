@@ -5,9 +5,10 @@ A simple library for common functions.
 
 [![Build Status](https://travis-ci.org/brightonmike/BulletsJS.svg?branch=master)](https://travis-ci.org/brightonmike/BulletsJS)
 
-To Do
-======
+Requirements
+============
 
+You'll need to write some CSS for BulletsJS components to work. You can change the default classes used by passing through the options.
 
 Development
 ===========
@@ -91,6 +92,22 @@ Modal mark-up should be as follows. The `modal` and `modal__inner` classes are o
 Menu Toggle
 -----------
 
+The Menu Toggle takes one option (default values shown). The class should be instantiated on the button used to trigger the menu.
+
+`activeClass: menu-is-open`
+
+Example CSS might be:
+
+```
+.menu {
+	display: none;
+}
+
+.menu-is-open .menu {
+	display: block;
+}
+```
+
 The menu toggle component requires the following mark-up to be accessible.
 
 ```
@@ -100,8 +117,10 @@ The menu toggle component requires the following mark-up to be accessible.
 The `aria-controls` attribute should match the `id` attribute of the navigation menu. The above button is using `menu` so the navigation is marked-up as follows.
 
 ```
-<nav class="pagemenu" aria-hidden="true" aria-labelledby="menu-toggle" id="menu"></nav>
+<nav class="menu" aria-hidden="true" aria-labelledby="menu-toggle" id="menu"></nav>
 ```
+
+The behaviour of this component is that it toggles a class on the body element which you can then attach CSS to for making your menu appear and disappear. The component then toggles the necessary aria roles for you to ensure the menu is more accessible.
 
 
 TESTING
