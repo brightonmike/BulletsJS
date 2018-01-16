@@ -76,14 +76,21 @@ If you want multiple modals on the same page, specify a different `targetModal` 
 
 Modal mark-up should be as follows. The `modal` and `modal__inner` classes are optional but suggested. You only need one overlay element per page.
 
-```
-<div class="overlay"></div>
+The `aria-controls` attribute should match the `id` attribute of the modal.
 
-<div class="modal js-modal">		
-	<div class="modal__inner">
+```
+
+<button class="button" data-bullets-js="Modal" aria-controls="modal">Open Modal</button>
+
+<div class="overlay" tabindex="-1"></div>
+
+<div class="modal js-modal" id="modal" aria-hidden="true" role="dialog" aria-labelledby="dialog-title">		
+	<div class="modal__inner" role="document" tabindex="0">
 
 		<button class="js-modal-close button secondary button--hollow">Close</button>
-		<h2>This is a modal!</h2>
+		<h2 id="dialog-title">This is a modal!</h2>
+
+		<!-- your modal content here -->
 
 	</div>
 </div>
