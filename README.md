@@ -36,6 +36,10 @@ It's a pain but I currently do the following (3 separate console tabs):
 
 public/index.html then pulls in fully babelified code via a script tag.
 
+Where's the slider?
+-------------------
+
+There are lots of excellent slider plugins out there that already do a great job. If you need a slider, try: https://github.com/nico3333fr/jquery-accessible-carrousel-aria
 
 
 Using the components
